@@ -1,0 +1,1 @@
+streamlit run "C:\Users\S A M B H A V\Desktop\mini project\py project\Multiple_Disease.py"
