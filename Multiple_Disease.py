@@ -60,10 +60,12 @@ if (selected == "Alzheimer"):
         
         if (alz_prediction[0] == 1):
           alz_diagnosis = 'The person is prone to Alzheimer'
+          st.warning(alz_diagnosis)
         else:
           alz_diagnosis = 'The person is not prone to Alzheimer'
+          st.success(alz_diagnosis)
         
-    st.success(alz_diagnosis)
+    # st.success(alz_diagnosis)
     
     
     
@@ -108,10 +110,12 @@ if (selected == "Diabetes"):
         
         if (diab_prediction[0] == 1):
           diab_diagnosis = 'The person is diabetic'
+          st.warning(diab_diagnosis)
         else:
           diab_diagnosis = 'The person is not diabetic'
+          st.success(diab_diagnosis)
         
-    st.success(diab_diagnosis)
+    # st.success(diab_diagnosis)
 
 if (selected == "Heart Disease"):
     st.title("Heart Disease Predictions using ML")
@@ -178,8 +182,10 @@ if (selected == "Heart Disease"):
         
         if (heart_prediction[0] == 1):
           heart_diagnosis = 'The person is having heart disease'
+          st.warning(heart_diagnosis)
         else:
           heart_diagnosis = 'The person does not have any heart disease'
+          st.success(heart_diagnosis)
         
     st.success(heart_diagnosis)
 
