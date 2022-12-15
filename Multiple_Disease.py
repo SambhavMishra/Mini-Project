@@ -6,7 +6,10 @@ import numpy as np
 import pandas as pd
 import general_diseases as gd
 from general_diseases import Diagnose
-
+import special_diseases as sd 
+from special_diseases import Alzheimer
+import matplotlib.pyplot as plt
+from io import BytesIO
 
 
 
@@ -110,6 +113,30 @@ if (selected == "Alzheimer"):
         else:
           alz_diagnosis = 'The person is not prone to Alzheimer'
           st.success(alz_diagnosis)
+
+
+    ## FOR GRAPH
+    if st.button("Show statistics"):
+        avgAlz = sd.Alzheimer.alzheimer()
+        st.write(avgAlz)
+        thisData = [age,educ,ses,mmse,cdr,etiv,nwbv,asf]
+        thisData = [eval(k) for k in thisData]
+        Features = ["Age","Educ","ses","mmse","cdr","etiv","nwbv","asf"]
+        for i in range(len(avgAlz)):
+            x = ["Average","You"]
+            y = [avgAlz[i],thisData[i]]
+            plt.figure()
+            fig = plt.figure(figsize=(3,3)) # try different values
+            ax = plt.axes()
+            ax.bar(x,y,label=Features[i],color=["#902fed","yellow"])
+            ax.legend()
+            # st.pyplot(fig)
+            buf = BytesIO()
+            fig.savefig(buf, format="png")
+            st.image(buf)
+
+        
+
         
     # st.success(alz_diagnosis)
     
@@ -162,6 +189,30 @@ if (selected == "Diabetes"):
           st.success(diab_diagnosis)
         
     # st.success(diab_diagnosis)
+
+    # FOR GRAPH
+    if st.button("Show statistics"):
+        avgDiab = sd.Diabetes.diabetes()
+        st.write(avgDiab)
+        thisData = [Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]
+        thisData = [eval(k) for k in thisData]
+        Features = ["Pregnancies","Glucose","Blood Pressure","Skin Thickness","Insulin","BMI","Diabetes Pedigree Function","Age"]
+        for i in range(len(avgDiab)):
+            x = ["Average","You"]
+            y = [avgDiab[i],thisData[i]]
+            plt.figure()
+            fig = plt.figure(figsize=(3,3)) # try different values
+            ax = plt.axes()
+            ax.bar(x,y,label=Features[i],color=["#902fed","yellow"])
+            ax.legend()
+            # st.pyplot(fig)
+            buf = BytesIO()
+            fig.savefig(buf, format="png")
+            st.image(buf)
+        
+
+
+
 
 if (selected == "Heart Disease"):
     st.title("Heart Disease Predictions using ML")
@@ -234,3 +285,22 @@ if (selected == "Heart Disease"):
           st.success(heart_diagnosis)
         
     # st.success(heart_diagnosis)
+
+    if st.button("Show statistics"):
+        avgHeart = sd.Heart.heart()
+        st.write(avgHeart)
+        thisData = [age, sex, cp, trestbps, chol, fbs, restecg,thalach,exang,oldpeak,slope,ca,thal]
+        thisData = [eval(k) for k in thisData]
+        Features = ["Age","sex","cp","trestbps","chol","fbs","restecg","thalach","exang","oldpeak","slope","ca","thal"]
+        for i in range(len(avgHeart)):
+            x = ["Average","You"]
+            y = [avgHeart[i],thisData[i]]
+            plt.figure()
+            fig = plt.figure(figsize=(3,3)) # try different values
+            ax = plt.axes()
+            ax.bar(x,y,label=Features[i],color=["#902fed","yellow"])
+            ax.legend()
+            # st.pyplot(fig)
+            buf = BytesIO()
+            fig.savefig(buf, format="png")
+            st.image(buf)
