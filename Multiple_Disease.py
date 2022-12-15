@@ -4,6 +4,12 @@ from streamlit_option_menu import option_menu
 import sklearn
 import numpy as np 
 import pandas as pd
+import general_diseases as gd
+from general_diseases import Diagnose
+
+
+
+
 # Loading the saved models
 diabetes = pickle.load(open("diabetes_model.sav", "rb"))
 
@@ -11,16 +17,56 @@ heart = pickle.load(open("heart_model.sav", "rb"))
 
 alzheimer = pickle.load(open("alzheimer_model.sav","rb"))
 
+
 # Sidebar for navigation
 with st.sidebar:
     selected = option_menu("Health Assistant",
-                            ["Alzheimer",
+                            ["General",
+                            "Alzheimer",
                             "Diabetes",
                             "Heart Disease",],
                             default_index=0)
 
+
+if (selected == "General"):
+    st.title("General disease prediction using ML")
+    diseases = gd.find_diseases.diseases()
+
+    toCheck = st.selectbox("choose one",diseases)
+    st.write("Diagnosing ",toCheck,":")
+    
+    Features = Diagnose.diagnose(toCheck)
+    # st.write(Features)
+    st.write("Please enter 1 if you have any of the symptoms otherwise enter 0")
+    data = []
+
+    for i in Features:
+        data.append(st.text_input(i))
+
+    
+    if st.button("Submit"):
+        data = [eval(j) for j in data]
+    
+        predictor = Diagnose.Prediction(toCheck,Features, data)
+
+
+        if predictor == 1:
+            st.warning("Warning! you are prone to disease "+toCheck)
+        else:
+            st.success("Congratulations! you are not prone to disease "+toCheck)
+
+
+
+
 if (selected == "Alzheimer"):
     st.title("Alzheimer predictions using ML")
+
+    introduction =pd.DataFrame({
+    "Title" :["Sex","Age",'educ','ses','cdr','mmse','etiv','nwbv','asf'],
+    "Description" : ["Age",'Sex','Years of education','Socioeconomic status','Clinical dimentia rating','Mini mental state examination','Estimated total intracranical volumne','Normalized whole brain volume','Atlas scaling factor']
+    })
+    st.table(introduction)
+
     col1, col2, col3 = st.columns(3)
     
     with col1:
